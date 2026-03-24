@@ -5,11 +5,11 @@ import {
   mockIssueSummary,
   mockRisks,
 } from '@/mock'
-import ReportHeader from '@/components/Reports/ReportHeader'
-import HealthScoreSection from '@/components/Reports/HealthScoreSection'
-import IssueSummarySection from '@/components/Reports/IssueSummarySection'
-import RiskPanel from '@/components/Reports/RiskPanel'
-import DownloadButtons from '@/components/Reports/DownloadButtons'
+import ReportHeader from '@/components/Dashboard/ReportHeader'
+import HealthScoreBar from '@/components/Dashboard/HealthScoreBar'
+import IssueSection from '@/components/Dashboard/IssueSection'
+import RiskPanel from '@/components/Dashboard/RiskPanel'
+import DownloadButtons from '@/components/actions/DownloadButtons'
 
 const { Title } = Typography
 
@@ -22,14 +22,14 @@ function Reports() {
 
       <Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
         <Col xs={24} lg={10}>
-          <HealthScoreSection data={mockHealthScore} />
+          <HealthScoreBar data={mockHealthScore} />
         </Col>
         <Col xs={24} lg={14}>
-          <RiskPanel risks={mockRisks} />
+          <RiskPanel data={mockRisks} />
         </Col>
       </Row>
 
-      <IssueSummarySection items={mockIssueSummary} />
+      <IssueSection data={mockIssueSummary} />
 
       <DownloadButtons />
     </div>

@@ -1,11 +1,11 @@
 import { Typography } from 'antd'
-import FilterBar from '@/components/Dashboard/FilterBar'
+import FilterBar from '@/components/filters/FilterBar'
 import StatCards from '@/components/Dashboard/StatCards'
 import HealthChart from '@/components/Dashboard/HealthChart'
 import AlertPanel from '@/components/Dashboard/AlertPanel'
 import TrendChart from '@/components/Dashboard/TrendChart'
-import ServerTable from '@/components/Dashboard/ServerTable'
-import BulkActionBar from '@/components/Dashboard/BulkActionBar'
+import ServerTable from '@/components/table/ServerTable'
+import BulkActionBar from '@/components/actions/BulkActionBar'
 
 const { Title } = Typography
 
