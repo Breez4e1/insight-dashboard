@@ -44,6 +44,46 @@ export const mockReports = [
   { id: 'r004', name: '月度诊断报告 2026-02',  type: 'monthly', status: 'done',    size: '6.1 MB', date: '2026-02-28' },
 ]
 
+export const mockReportHeader = {
+  title: '系统健康评估报告',
+  period: '2026-03-17 ~ 2026-03-23',
+  generatedAt: '2026-03-23 18:30',
+  owner: '智能巡检平台',
+}
+
+export const mockHealthScore = {
+  score: 86,
+  trend: '+4',
+  level: '良好',
+}
+
+export const mockIssueSummary = [
+  { key: 'critical', label: '严重问题', count: 1, color: '#ff4d4f' },
+  { key: 'warning', label: '一般告警', count: 5, color: '#faad14' },
+  { key: 'info', label: '提示项', count: 9, color: '#1677ff' },
+]
+
+export const mockRisks = [
+  {
+    id: 'risk-1',
+    level: 'high',
+    title: 'PLC-B01 离线时长较高',
+    desc: '连续离线超过 120 分钟，建议优先排查网络链路。',
+  },
+  {
+    id: 'risk-2',
+    level: 'medium',
+    title: 'PLC-A02 负载接近阈值',
+    desc: 'CPU 与内存高于 80% 的时间占比持续上升。',
+  },
+  {
+    id: 'risk-3',
+    level: 'low',
+    title: '部分设备日志上报延迟',
+    desc: '建议检查日志采集批次与上传策略。',
+  },
+]
+
 // 趋势图 Mock 数据（折线图用）
 export const mockTrendData = {
   dates:    ['03-17', '03-18', '03-19', '03-20', '03-21', '03-22', '03-23'],

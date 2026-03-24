@@ -18,9 +18,24 @@ const statusMap = {
  * - 每行有操作按钮（Inspect、Diagnose、View）
  */
 function ServerTable() {
-  const filteredServers = useDashboardStore((state) => state.getFilteredServers())
+  const servers = useDashboardStore((state) => state.servers)
+  const filters = useDashboardStore((state) => state.filters)
   const selectedRowKeys = useDashboardStore((state) => state.selectedRowKeys)
   const setSelectedRowKeys = useDashboardStore((state) => state.setSelectedRowKeys)
+
+  // 在组件内派生筛选结果，避免 selector 每次返回新数组导致循环更新
+  const filteredServers = useMemo(() => {
+    return servers.filter((server) => {
+      const searchText = filters.searchText?.trim().toLowerCase() || ''
+      const matchSearch =
+        !searchText ||
+        server.name.toLowerCase().includes(searchText) ||
+        server.ip.includes(searchText)
+
+      const matchStatus = !filters.statusFilter || server.status === filters.statusFilter
+      return matchSearch && matchStatus
+    })
+  }, [servers, filters])
 
   // 操作按钮处理（用 useCallback 缓存以避免无限更新）
   const handleInspect = useCallback((server) => {
@@ -133,27 +148,27 @@ function ServerTable() {
             size="small"
             icon={<DatabaseOutlined />}
             onClick={() => handleInspect(record)}
-            title="运行巡检"
+            title="Inspect"
           >
-            巡检
+            Inspect
           </Button>
           <Button
             type="link"
             size="small"
             icon={<BugOutlined />}
             onClick={() => handleDiagnose(record)}
-            title="故障诊断"
+            title="Diagnose"
           >
-            诊断
+            Diagnose
           </Button>
           <Button
             type="link"
             size="small"
             icon={<EyeOutlined />}
             onClick={() => handleView(record)}
-            title="查看详情"
+            title="View"
           >
-            查看
+            View
           </Button>
         </Space>
       ),
