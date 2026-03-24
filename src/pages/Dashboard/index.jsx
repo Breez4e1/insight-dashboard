@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Typography } from 'antd'
 import FilterBar from '@/components/Dashboard/FilterBar'
 import StatCards from '@/components/Dashboard/StatCards'
@@ -14,34 +13,22 @@ const { Title } = Typography
  * Dashboard 页面 —— 仪表盘
  *
  * 布局：
- * 1. 筛选栏（FilterBar）
- * 2. 统计卡片（StatCards）
- * 3. 健康图表（HealthChart）+ 告警面板（AlertPanel）
- * 4. 趋势图（TrendChart）
- * 5. 设备表格（ServerTable）+ 批量操作栏（BulkActionBar）
+ * 1. 标题
+ * 2. 筛选栏（FilterBar）
+ * 3. 统计卡片（StatCards）
+ * 4. 健康图表（HealthChart）+ 告警面板（AlertPanel）两列布局
+ * 5. 趋势图（TrendChart）
+ * 6. 设备表格（ServerTable）+ 批量操作栏（BulkActionBar）
+ *
+ * 所有状态由 useDashboardStore 统一管理
  */
 function Dashboard() {
-  const [selectedCount, setSelectedCount] = useState(0)
-  const [filters, setFilters] = useState({})
-
-  const handleFilterChange = (newFilters) => {
-    setFilters((prev) => ({ ...prev, ...newFilters }))
-  }
-
-  const handleSelectChange = (count) => {
-    setSelectedCount(count)
-  }
-
-  const handleClearSelect = () => {
-    setSelectedCount(0)
-  }
-
   return (
     <div style={{ paddingBottom: 60 }}>
       <Title level={3} style={{ marginBottom: 24 }}>仪表盘</Title>
 
       {/* 筛选栏 */}
-      <FilterBar onFilter={handleFilterChange} />
+      <FilterBar />
 
       {/* 统计卡片 */}
       <StatCards />
@@ -65,10 +52,10 @@ function Dashboard() {
       <TrendChart />
 
       {/* 设备列表 */}
-      <ServerTable onSelectChange={handleSelectChange} />
+      <ServerTable />
 
       {/* 批量操作栏 */}
-      <BulkActionBar selectedCount={selectedCount} onClearSelect={handleClearSelect} />
+      <BulkActionBar />
     </div>
   )
 }

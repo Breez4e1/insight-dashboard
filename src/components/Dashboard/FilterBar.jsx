@@ -1,28 +1,28 @@
 import { Button, Col, Input, Row, Select, Space } from 'antd'
 import { SearchOutlined, FilterOutlined, RedoOutlined } from '@ant-design/icons'
+import useDashboardStore from '@/store/dashboard'
 import { mockFilterOptions } from '@/mock'
 
 /**
  * FilterBar —— 筛选栏
  *
- * Props:
- *   onFilter {function} 筛选条件改变时的回调
+ * 使用 Zustand store 管理筛选条件
  */
-function FilterBar({ onFilter }) {
-  const handleLocationChange = (value) => {
-    onFilter?.({ location: value })
+function FilterBar() {
+  const filters = useDashboardStore((state) => state.filters)
+  const setFilters = useDashboardStore((state) => state.setFilters)
+  const clearFilters = useDashboardStore((state) => state.clearFilters)
+
+  const handleSearchChange = (e) => {
+    setFilters({ searchText: e.target.value })
   }
 
   const handleStatusChange = (value) => {
-    onFilter?.({ status: value })
-  }
-
-  const handleSearch = (e) => {
-    onFilter?.({ search: e.target.value })
+    setFilters({ statusFilter: value })
   }
 
   const handleReset = () => {
-    onFilter?.({ location: '', status: '', search: '' })
+    clearFilters()
   }
 
   return (
@@ -30,17 +30,10 @@ function FilterBar({ onFilter }) {
       <Row gutter={[16, 16]}>
         <Col xs={24} sm={12} md={6}>
           <Input
-            placeholder="搜索设备名称"
+            placeholder="搜索设备名称或 IP"
             prefix={<SearchOutlined />}
-            onChange={handleSearch}
-            allowClear
-          />
-        </Col>
-        <Col xs={24} sm={12} md={6}>
-          <Select
-            placeholder="选择区域"
-            options={mockFilterOptions.locations}
-            onChange={handleLocationChange}
+            value={filters.searchText}
+            onChange={handleSearchChange}
             allowClear
           />
         </Col>
@@ -48,6 +41,7 @@ function FilterBar({ onFilter }) {
           <Select
             placeholder="选择状态"
             options={mockFilterOptions.statuses}
+            value={filters.statusFilter || undefined}
             onChange={handleStatusChange}
             allowClear
           />
