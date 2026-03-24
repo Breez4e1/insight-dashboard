@@ -1,83 +1,53 @@
 import { useState } from 'react'
-import { Layout, Menu, theme, Typography } from 'antd'
-import { Outlet, useNavigate, useLocation } from 'react-router-dom'
-import {
-  DashboardOutlined,
-  SearchOutlined,
-  BugOutlined,
-  FileTextOutlined,
-} from '@ant-design/icons'
+import { Layout } from 'antd'
+import { Outlet } from 'react-router-dom'
+import SidebarMenu from './SidebarMenu'
+import HeaderBar from './HeaderBar'
 
-const { Header, Sider, Content } = Layout
-const { Title } = Typography
+const { Content } = Layout
 
-// 侧边栏菜单项配置
-const menuItems = [
-  { key: '/dashboard',  icon: <DashboardOutlined />, label: '仪表盘'   },
-  { key: '/inspection', icon: <SearchOutlined />,    label: '巡检管理' },
-  { key: '/diagnosis',  icon: <BugOutlined />,       label: '故障诊断' },
-  { key: '/reports',    icon: <FileTextOutlined />,  label: '报告中心' },
-]
-
+/**
+ * AppLayout —— 应用根布局（骨架）
+ *
+ * 布局结构（flex row）：
+ * ┌─────────────┬──────────────────────────────┐
+ * │             │  HeaderBar                   │
+ * │ SidebarMenu │──────────────────────────────│
+ * │             │  Content（<Outlet />）        │
+ * └─────────────┴──────────────────────────────┘
+ *
+ * 关键样式说明：
+ * - 外层 Layout：height: 100vh + overflow: hidden → 让视口高度固定，不出现全局滚动条
+ * - 内层 Layout：overflow: hidden → 将滚动行为限制在 Content 内
+ * - Content：flex: 1 + overflowY: auto → 内容超长时只在此区域滚动
+ */
 function AppLayout() {
   const [collapsed, setCollapsed] = useState(false)
-  const navigate  = useNavigate()
-  const location  = useLocation()
-  const { token } = theme.useToken()
-
-  // 点击菜单时跳转对应路由
-  const handleMenuClick = ({ key }) => navigate(key)
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      {/* 侧边栏 */}
-      <Sider
-        collapsible
+    <Layout style={{ height: '100vh', overflow: 'hidden' }}>
+      {/* 左侧导航 */}
+      <SidebarMenu
         collapsed={collapsed}
         onCollapse={setCollapsed}
-        style={{ background: token.colorBgContainer }}
-      >
-        {/* Logo 区域 */}
-        <div style={{
-          height: 64,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          borderBottom: `1px solid ${token.colorBorderSecondary}`,
-        }}>
-          <Title
-            level={5}
-            style={{ margin: 0, color: token.colorPrimary, whiteSpace: 'nowrap' }}
-          >
-            {collapsed ? 'ID' : 'Insight Dashboard'}
-          </Title>
-        </div>
+      />
 
-        <Menu
-          mode="inline"
-          selectedKeys={[location.pathname]}
-          items={menuItems}
-          onClick={handleMenuClick}
-          style={{ borderRight: 0, paddingTop: 8 }}
+      {/* 右侧区域：头部 + 内容 */}
+      <Layout style={{ overflow: 'hidden' }}>
+        <HeaderBar
+          collapsed={collapsed}
+          onCollapse={() => setCollapsed((c) => !c)}
         />
-      </Sider>
 
-      {/* 右侧主区域 */}
-      <Layout>
-        <Header style={{
-          background: token.colorBgContainer,
-          borderBottom: `1px solid ${token.colorBorderSecondary}`,
-          padding: '0 24px',
-          display: 'flex',
-          alignItems: 'center',
-        }}>
-          <span style={{ color: token.colorTextSecondary, fontSize: 13 }}>
-            欢迎使用 Insight Dashboard
-          </span>
-        </Header>
-
-        {/* 页面内容区域 —— <Outlet /> 会渲染当前路由对应的页面组件 */}
-        <Content style={{ margin: 24, minHeight: 280 }}>
+        {/* 内容区：这里渲染各业务页面 */}
+        <Content
+          style={{
+            flex: 1,
+            overflowY: 'auto',
+            padding: 24,
+            background: '#f5f6fa',
+          }}
+        >
           <Outlet />
         </Content>
       </Layout>
@@ -86,3 +56,4 @@ function AppLayout() {
 }
 
 export default AppLayout
+
