@@ -1,2 +1,25 @@
+# 依赖 & 构建产物
+node_modules
+dist
+dist-ssr
+
+# 本地环境变量（包含敏感密钥，不提交）
+.env.local
+.env.*.local
+
+# 部署平台本地缓存
 .vercel
 .netlify
+
+# 编辑器
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# 系统文件
+.DS_Store
+Thumbs.db
+node_modules
