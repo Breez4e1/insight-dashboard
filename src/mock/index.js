@@ -50,3 +50,47 @@ export const mockTrendData = {
   detected: [98, 115, 107, 130, 122, 118, 128],
   errors:   [4,  6,   3,   8,   5,   4,   7],
 }
+
+// ─────────────────────────────────────────────────────────────
+// Dashboard 页面相关 Mock 数据
+// ─────────────────────────────────────────────────────────────
+
+// 告警面板数据
+export const mockAlerts = [
+  { id: 'a001', level: 'error',   title: 'PLC-A02 电流过载',    desc: '实时电流 125A，超出额定 110A', time: '2026-03-23 14:32' },
+  { id: 'a002', level: 'warning', title: 'PLC-B01 通信超时',   desc: '最后心跳 45 秒前',           time: '2026-03-23 14:28' },
+  { id: 'a003', level: 'warning', title: 'PLC-C03 温度告警',   desc: '设备温度 78°C，接近上限',    time: '2026-03-23 14:15' },
+]
+
+// 健康指标（仪表盘、圆形进度指示）
+export const mockHealthMetrics = {
+  systemHealth:  85,  // 系统健康度 0-100
+  deviceStatus:  92,  // 设备在线率 0-100
+  uptime:        99.8, // 运行时间 0-100
+}
+
+// 服务器/设备列表（仪表）
+export const mockServers = [
+  { id: 's001', name: 'PLC-A01', ip: '192.168.1.10',  status: 'online',  cpu: 45,  memory: 62, disk: 38, health: 92 },
+  { id: 's002', name: 'PLC-A02', ip: '192.168.1.11',  status: 'warning', cpu: 78,  memory: 85, disk: 71, health: 65 },
+  { id: 's003', name: 'PLC-B01', ip: '192.168.1.20',  status: 'offline', cpu: 0,   memory: 0,  disk: 0,  health: 15 },
+  { id: 's004', name: 'PLC-B02', ip: '192.168.1.21',  status: 'online',  cpu: 32,  memory: 48, disk: 25, health: 88 },
+  { id: 's005', name: 'PLC-C01', ip: '192.168.1.30',  status: 'online',  cpu: 56,  memory: 71, disk: 52, health: 80 },
+  { id: 's006', name: 'PLC-C02', ip: '192.168.1.31',  status: 'online',  cpu: 38,  memory: 55, disk: 42, health: 85 },
+]
+
+// 筛选选项
+export const mockFilterOptions = {
+  locations: [
+    { label: '全部区域',    value: '' },
+    { label: '车间一',     value: 'workshop_1' },
+    { label: '车间二',     value: 'workshop_2' },
+    { label: '车间三',     value: 'workshop_3' },
+  ],
+  statuses: [
+    { label: '全部状态', value: '' },
+    { label: '在线',     value: 'online' },
+    { label: '告警',     value: 'warning' },
+    { label: '离线',     value: 'offline' },
+  ],
+}
